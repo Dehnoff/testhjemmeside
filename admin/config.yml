@@ -1,0 +1,63 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "indhold"
+    label: "Hjemmeside-indhold"
+    files:
+      - file: "content.json"
+        label: "Rediger tekster, priser og billeder"
+        name: "content"
+        fields:
+          - label: "Forside (hero)"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Lille tekst over overskrift", name: "eyebrow", widget: "string" }
+              - { label: "Stor overskrift", name: "title", widget: "string" }
+              - { label: "Introtekst", name: "lead", widget: "text" }
+              - { label: "Billede", name: "image", widget: "image", choose_url: true }
+              - { label: "Tal 1", name: "stat1_num", widget: "string" }
+              - { label: "Tekst under tal 1", name: "stat1_lbl", widget: "string" }
+              - { label: "Tal 2", name: "stat2_num", widget: "string" }
+              - { label: "Tekst under tal 2", name: "stat2_lbl", widget: "string" }
+              - { label: "Tal 3", name: "stat3_num", widget: "string" }
+              - { label: "Tekst under tal 3", name: "stat3_lbl", widget: "string" }
+          - label: "Kontaktinfo"
+            name: "contact"
+            widget: "object"
+            fields:
+              - { label: "Telefonnummer", name: "phone", widget: "string" }
+              - { label: "E-mail", name: "email", widget: "string" }
+          - label: "Footer (bund af siden)"
+            name: "footer"
+            widget: "object"
+            fields:
+              - { label: "Kort beskrivelse af firmaet", name: "tagline", widget: "text" }
+              - { label: "Områder I dækker", name: "areas", widget: "string" }
+              - { label: "Åbningstider", name: "hours", widget: "string" }
+              - { label: "Copyright-tekst", name: "copyright", widget: "string" }
+          - label: "Priser (de 9 pakker på Pakker-siden, i rækkefølge)"
+            name: "prices"
+            widget: "object"
+            fields:
+              - { label: "Pris 1 — Sommerklar have", name: "price_1", widget: "string" }
+              - { label: "Pris 2 — Fast rengøring", name: "price_2", widget: "string" }
+              - { label: "Pris 3 — To-do-listen ryddet", name: "price_3", widget: "string" }
+              - { label: "Pris 4 — Klare vinduer", name: "price_4", widget: "string" }
+              - { label: "Pris 5 — Vintertjeneste", name: "price_5", widget: "string" }
+              - { label: "Pris 6 — Bede & beplantning", name: "price_6", widget: "string" }
+              - { label: "Pris 7 — Boligtilsyn ved ferie", name: "price_7", widget: "string" }
+              - { label: "Pris 8 — Indkøb & ærinder", name: "price_8", widget: "string" }
+              - { label: "Pris 9 — Tagrender & facade", name: "price_9", widget: "string" }
+          - label: "Anmeldelser (testimonials)"
+            name: "testimonials"
+            widget: "object"
+            fields:
+              - { label: "Anmeldelse 1 (Mette & Jonas)", name: "testi_1", widget: "text" }
+              - { label: "Anmeldelse 2 (Birthe & Erik)", name: "testi_2", widget: "text" }
+              - { label: "Anmeldelse 3 (Anders K.)", name: "testi_3", widget: "text" }

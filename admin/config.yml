@@ -61,3 +61,37 @@ collections:
               - { label: "Anmeldelse 1 (Mette & Jonas)", name: "testi_1", widget: "text" }
               - { label: "Anmeldelse 2 (Birthe & Erik)", name: "testi_2", widget: "text" }
               - { label: "Anmeldelse 3 (Anders K.)", name: "testi_3", widget: "text" }
+          - label: "Billeder (alle billeder på siden, i rækkefølge)"
+            name: "images"
+            widget: "object"
+            fields:
+              - { label: "Forside – Have & udendørs (kort)", name: "img_1", widget: "image", choose_url: true }
+              - { label: "Forside – Rengøring (kort)", name: "img_2", widget: "image", choose_url: true }
+              - { label: "Forside – Småreparationer (kort)", name: "img_3", widget: "image", choose_url: true }
+              - { label: "Anmeldelse – portræt af Mette", name: "img_4", widget: "image", choose_url: true }
+              - { label: "Anmeldelse – portræt af Birthe", name: "img_5", widget: "image", choose_url: true }
+              - { label: "Anmeldelse – portræt af Anders", name: "img_6", widget: "image", choose_url: true }
+              - { label: "Om os – vicevært giver hånd ved døren", name: "img_7", widget: "image", choose_url: true }
+              - { label: "Om os – vicevært med værktøj", name: "img_8", widget: "image", choose_url: true }
+              - { label: "Om os – hjem set indefra", name: "img_9", widget: "image", choose_url: true }
+              - { label: "Services – Havearbejde", name: "img_10", widget: "image", choose_url: true }
+              - { label: "Services – Bede & beplantning", name: "img_11", widget: "image", choose_url: true }
+              - { label: "Services – Rengøring", name: "img_12", widget: "image", choose_url: true }
+              - { label: "Services – Vinduespudsning", name: "img_13", widget: "image", choose_url: true }
+              - { label: "Services – Småreparationer", name: "img_14", widget: "image", choose_url: true }
+              - { label: "Services – Tagrender & facade", name: "img_15", widget: "image", choose_url: true }
+              - { label: "Services – Snerydning & grusning", name: "img_16", widget: "image", choose_url: true }
+              - { label: "Services – Indkøb & ærinder", name: "img_17", widget: "image", choose_url: true }
+              - { label: "Services – Boligtilsyn ved ferie", name: "img_18", widget: "image", choose_url: true }
+              - { label: "Services – Maling & opfriskning", name: "img_19", widget: "image", choose_url: true }
+              - { label: "Services – Forårs- & vinterklargøring", name: "img_20", widget: "image", choose_url: true }
+              - { label: "Services – Forebyggende tjek", name: "img_21", widget: "image", choose_url: true }
+              - { label: "Pakker – Sommerklar have", name: "img_22", widget: "image", choose_url: true }
+              - { label: "Pakker – Fast rengøring", name: "img_23", widget: "image", choose_url: true }
+              - { label: "Pakker – To-do-listen ryddet", name: "img_24", widget: "image", choose_url: true }
+              - { label: "Pakker – Klare vinduer", name: "img_25", widget: "image", choose_url: true }
+              - { label: "Pakker – Vintertjeneste", name: "img_26", widget: "image", choose_url: true }
+              - { label: "Pakker – Bede & beplantning", name: "img_27", widget: "image", choose_url: true }
+              - { label: "Pakker – Boligtilsyn ved ferie", name: "img_28", widget: "image", choose_url: true }
+              - { label: "Pakker – Indkøb & ærinder", name: "img_29", widget: "image", choose_url: true }
+              - { label: "Pakker – Tagrender & facade", name: "img_30", widget: "image", choose_url: true }

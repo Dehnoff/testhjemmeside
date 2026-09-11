@@ -1,19 +1,19 @@
 {
   "hero": {
-    "eyebrow": "Ejendomsservice — nu for private",
-    "title": "Dit hjem fortjener en fast vicevært",
-    "lead": "Den professionelle ejendomsservice, som store boligforeninger nyder hver dag — nu skræddersyet til dit private hjem. Sammensæt din egen pakke af have, rengøring, småreparationer og tilsyn. Én fast person, ét abonnement, nul bekymringer.",
-    "image": "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1100&q=80",
     "stat1_num": "12+",
-    "stat1_lbl": "faste opgavetyper",
     "stat2_num": "1",
-    "stat2_lbl": "fast vicevært du kender",
     "stat3_num": "0 kr",
-    "stat3_lbl": "i bindingsperiode"
+    "eyebrow": "Ejendomsservice — nu for private",
+    "stat1_lbl": "faste opgavetyper",
+    "stat2_lbl": "fast vicevært du kender",
+    "stat3_lbl": "i bindingsperiode",
+    "title": "Dit hjem fortjener en fast vicevært",
+    "image": "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1100&q=80",
+    "lead": "Den professionelle ejendomsservice, som store boligforeninger nyder hver dag — nu skræddersyet til dit private hjem. Sammensæt din egen pakke af have, rengøring, småreparationer og tilsyn. Én fast person, ét abonnement, nul bekymringer."
   },
   "contact": {
     "phone": "+45 70 12 34 56",
-    "email": "kontakt@privatvicevaert.dk"
+    "email": "Tobias2550@gmail.com"
   },
   "footer": {
     "tagline": "Din private ejendomsservice på abonnement. Vi giver dit hjem den faste, professionelle omsorg, som store ejendomme altid har haft.",
@@ -22,15 +22,15 @@
     "copyright": "© 2026 Privatvicevært ApS · CVR 12345678 · Alle rettigheder forbeholdes"
   },
   "prices": {
+    "price_6": "399",
+    "price_7": "249",
+    "price_8": "199",
+    "price_9": "499",
     "price_1": "349",
     "price_2": "399",
     "price_3": "449",
     "price_4": "299",
-    "price_5": "349",
-    "price_6": "399",
-    "price_7": "249",
-    "price_8": "199",
-    "price_9": "499"
+    "price_5": "349"
   },
   "testimonials": {
     "testi_1": "\"Vi er to på fuldtid med tre børn. Privatvicevært har givet os vores weekender tilbage — haven passer sig selv, og listen på køleskabet er væk.\"",

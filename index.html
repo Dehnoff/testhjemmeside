@@ -707,7 +707,11 @@ footer{background:var(--pine);color:#cfd8d2;padding:clamp(3rem,6vw,4.5rem) 0 2re
     <div class="contact-grid">
       <div class="form-card">
         <h2 style="font-size:1.7rem;margin-bottom:1.4rem">Få dit tilbud</h2>
-        <form id="contactForm" onsubmit="return submitForm(event)" novalidate>
+        <form id="contactForm" name="tilbud" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" onsubmit="return submitForm(event)" novalidate>
+          <input type="hidden" name="form-name" value="tilbud">
+          <p style="display:none">
+            <label>Udfyld ikke dette felt hvis du er et menneske: <input name="bot-field"></label>
+          </p>
           <div class="two">
             <div class="field"><label for="name">Navn</label><input id="name" name="name" type="text" placeholder="Dit fulde navn" required></div>
             <div class="field"><label for="phone">Telefon</label><input id="phone" name="phone" type="tel" placeholder="+45 12 34 56 78" required></div>
@@ -839,9 +843,25 @@ function submitForm(e){
   e.preventDefault();
   const f=e.target;
   if(!f.checkValidity()){f.reportValidity();return false;}
-  document.getElementById('formMsg').classList.add('show');
-  f.reset();
-  setTimeout(()=>document.getElementById('formMsg').classList.remove('show'),6000);
+
+  const data = new FormData(f);
+  const encoded = new URLSearchParams(data).toString();
+
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: encoded
+  })
+  .then(() => {
+    document.getElementById('formMsg').classList.add('show');
+    f.reset();
+    setTimeout(()=>document.getElementById('formMsg').classList.remove('show'),6000);
+  })
+  .catch((err) => {
+    console.error('Formular-fejl:', err);
+    alert('Der gik noget galt. Prøv venligst igen, eller ring på ' + (window.__cmsContact ? window.__cmsContact.phone : '+45 70 12 34 56'));
+  });
+
   return false;
 }
 
@@ -855,51 +875,67 @@ go('home');
 </script>
 
 <script>
-// Henter redigerbart indhold fra content.json og sætter det ind på siden
-fetch('content.json?_=' + Date.now())
-  .then(r => r.json())
-  .then(c => {
-    const setText = (id, val) => { const el = document.getElementById(id); if (el && val !== undefined) el.textContent = val; };
-    const setAttr = (id, attr, val) => { const el = document.getElementById(id); if (el && val !== undefined) el.setAttribute(attr, val); };
+// Sætter redigerbart indhold ind på siden. Bruges både ved normal indlæsning
+// og til live-preview fra redigeringspanelet (/admin/).
+function applyContent(c) {
+  const setText = (id, val) => { const el = document.getElementById(id); if (el && val !== undefined) el.textContent = val; };
+  const setAttr = (id, attr, val) => { const el = document.getElementById(id); if (el && val !== undefined) el.setAttribute(attr, val); };
 
-    if (c.hero) {
-      setText('cms-hero-eyebrow', c.hero.eyebrow);
-      setText('cms-hero-title', c.hero.title);
-      setText('cms-hero-lead', c.hero.lead);
-      setAttr('cms-hero-img', 'src', c.hero.image);
-      setText('cms-stat1-num', c.hero.stat1_num);
-      setText('cms-stat1-lbl', c.hero.stat1_lbl);
-      setText('cms-stat2-num', c.hero.stat2_num);
-      setText('cms-stat2-lbl', c.hero.stat2_lbl);
-      setText('cms-stat3-num', c.hero.stat3_num);
-      setText('cms-stat3-lbl', c.hero.stat3_lbl);
-    }
-    if (c.contact) {
-      setText('cms-phone-contact', c.contact.phone);
-      setAttr('cms-phone-contact', 'href', 'tel:' + c.contact.phone.replace(/\s/g, ''));
-      setText('cms-email-contact', c.contact.email);
-      setAttr('cms-email-contact', 'href', 'mailto:' + c.contact.email);
-    }
-    if (c.footer) {
-      setText('cms-footer-tagline', c.footer.tagline);
-      setText('cms-phone-footer', c.contact ? c.contact.phone : undefined);
-      setText('cms-email-footer', c.contact ? c.contact.email : undefined);
-      setText('cms-areas-footer', c.footer.areas);
-      setText('cms-hours-footer', c.footer.hours);
-      setText('cms-footer-copyright', c.footer.copyright);
-    }
-    if (c.prices) {
-      Object.keys(c.prices).forEach((key, i) => {
-        setText('cms-price-' + (i + 1), c.prices[key] + ' kr');
-      });
-    }
-    if (c.testimonials) {
-      setText('cms-testi-1-quote', c.testimonials.testi_1);
-      setText('cms-testi-2-quote', c.testimonials.testi_2);
-      setText('cms-testi-3-quote', c.testimonials.testi_3);
-    }
-  })
-  .catch(err => console.warn('Kunne ikke hente content.json', err));
+  if (c.hero) {
+    setText('cms-hero-eyebrow', c.hero.eyebrow);
+    setText('cms-hero-title', c.hero.title);
+    setText('cms-hero-lead', c.hero.lead);
+    setAttr('cms-hero-img', 'src', c.hero.image);
+    setText('cms-stat1-num', c.hero.stat1_num);
+    setText('cms-stat1-lbl', c.hero.stat1_lbl);
+    setText('cms-stat2-num', c.hero.stat2_num);
+    setText('cms-stat2-lbl', c.hero.stat2_lbl);
+    setText('cms-stat3-num', c.hero.stat3_num);
+    setText('cms-stat3-lbl', c.hero.stat3_lbl);
+  }
+  if (c.contact) {
+    window.__cmsContact = c.contact;
+    setText('cms-phone-contact', c.contact.phone);
+    setAttr('cms-phone-contact', 'href', 'tel:' + (c.contact.phone || '').replace(/\s/g, ''));
+    setText('cms-email-contact', c.contact.email);
+    setAttr('cms-email-contact', 'href', 'mailto:' + c.contact.email);
+  }
+  if (c.footer) {
+    setText('cms-footer-tagline', c.footer.tagline);
+    setText('cms-phone-footer', c.contact ? c.contact.phone : undefined);
+    setText('cms-email-footer', c.contact ? c.contact.email : undefined);
+    setText('cms-areas-footer', c.footer.areas);
+    setText('cms-hours-footer', c.footer.hours);
+    setText('cms-footer-copyright', c.footer.copyright);
+  }
+  if (c.prices) {
+    Object.keys(c.prices).forEach((key, i) => {
+      setText('cms-price-' + (i + 1), c.prices[key] + ' kr');
+    });
+  }
+  if (c.testimonials) {
+    setText('cms-testi-1-quote', c.testimonials.testi_1);
+    setText('cms-testi-2-quote', c.testimonials.testi_2);
+    setText('cms-testi-3-quote', c.testimonials.testi_3);
+  }
+}
+
+// Normal indlæsning: hent content.json som vanligt
+if (!window.__isCmsPreview) {
+  fetch('content.json?_=' + Date.now())
+    .then(r => r.json())
+    .then(applyContent)
+    .catch(err => console.warn('Kunne ikke hente content.json', err));
+}
+
+// Live-preview: lyt efter beskeder fra redigeringspanelet i /admin/
+window.addEventListener('message', (event) => {
+  if (event.origin !== window.location.origin) return;
+  if (event.data && event.data.type === 'cms-preview-update') {
+    window.__isCmsPreview = true;
+    applyContent(event.data.content);
+  }
+});
 </script>
 </body>
 </html>

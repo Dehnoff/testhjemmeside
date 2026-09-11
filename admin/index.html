@@ -17,5 +17,81 @@
       });
     }
   </script>
+  <style>
+    .pv{font-family:'Inter',system-ui,sans-serif;background:#f6f2ea;color:#1c211f;padding:0}
+    .pv .hero{background:linear-gradient(135deg,#1f3a34,#16292430);color:#f6f2ea;padding:2.5rem 1.5rem;border-radius:0 0 18px 18px}
+    .pv .eyebrow{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:#c2a36b;display:block;margin-bottom:.6rem}
+    .pv h1{font-family:Georgia,serif;font-size:1.7rem;margin:0 0 .6rem;color:#fffdf9}
+    .pv .lead{font-size:.9rem;color:#d8e0db;max-width:60ch}
+    .pv .stats{display:flex;gap:1.5rem;margin-top:1.2rem;flex-wrap:wrap}
+    .pv .stats b{display:block;font-size:1.2rem;color:#c2a36b}
+    .pv .stats span{font-size:.72rem;color:#c5cec8}
+    .pv .card{background:#fffdf9;border:1px solid #e2dccd;border-radius:14px;padding:1.2rem;margin:1rem 1.2rem}
+    .pv .card h4{margin:0 0 .5rem;font-family:Georgia,serif;color:#1f3a34;font-size:1rem}
+    .pv .card p{margin:.2rem 0;font-size:.85rem;color:#5d6661}
+    .pv .price-row{display:flex;justify-content:space-between;font-size:.85rem;padding:.3rem 0;border-bottom:1px dashed #e2dccd}
+    .pv .price-row b{color:#a8884d}
+    .pv .testi{font-size:.85rem;font-style:italic;color:#5d6661;margin-bottom:.6rem;padding-bottom:.6rem;border-bottom:1px solid #e2dccd}
+    .pv .label{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:#a8884d;font-weight:600;display:block;margin:1.4rem 1.2rem .3rem}
+  </style>
+  <script>
+    var createClass = window.createClass;
+    var h = window.h;
+
+    var PreviewComponent = createClass({
+      render: function () {
+        var entry = this.props.entry;
+        var get = function (path, fallback) {
+          var v = entry.getIn(['data'].concat(path));
+          return (v === undefined || v === null || v === '') ? (fallback || '') : v;
+        };
+
+        return h('div', { className: 'pv' },
+          h('div', { className: 'hero' },
+            h('span', { className: 'eyebrow' }, get(['hero', 'eyebrow'], 'Eyebrow-tekst')),
+            h('h1', {}, get(['hero', 'title'], 'Overskrift')),
+            h('p', { className: 'lead' }, get(['hero', 'lead'], 'Introtekst under overskriften...')),
+            h('div', { className: 'stats' },
+              h('div', {}, h('b', {}, get(['hero', 'stat1_num'], '')), h('span', {}, get(['hero', 'stat1_lbl'], ''))),
+              h('div', {}, h('b', {}, get(['hero', 'stat2_num'], '')), h('span', {}, get(['hero', 'stat2_lbl'], ''))),
+              h('div', {}, h('b', {}, get(['hero', 'stat3_num'], '')), h('span', {}, get(['hero', 'stat3_lbl'], '')))
+            )
+          ),
+
+          h('span', { className: 'label' }, 'Kontakt & footer (vises nederst på alle sider)'),
+          h('div', { className: 'card' },
+            h('h4', {}, 'Kontakt'),
+            h('p', {}, '📞 ' + get(['contact', 'phone'], '')),
+            h('p', {}, '✉️ ' + get(['contact', 'email'], '')),
+            h('p', {}, get(['footer', 'areas'], '')),
+            h('p', {}, get(['footer', 'hours'], '')),
+            h('p', { style: { marginTop: '.6rem', fontStyle: 'italic' } }, get(['footer', 'tagline'], '')),
+            h('p', { style: { fontSize: '.72rem', opacity: .7 } }, get(['footer', 'copyright'], ''))
+          ),
+
+          h('span', { className: 'label' }, 'Priser (Pakker-siden, i rækkefølge)'),
+          h('div', { className: 'card' },
+            [1,2,3,4,5,6,7,8,9].map(function (n) {
+              return h('div', { className: 'price-row', key: n },
+                h('span', {}, 'Pakke ' + n),
+                h('b', {}, get(['prices', 'price_' + n], '—') + ' kr')
+              );
+            })
+          ),
+
+          h('span', { className: 'label' }, 'Anmeldelser (forsiden)'),
+          h('div', { className: 'card' },
+            h('div', { className: 'testi' }, get(['testimonials', 'testi_1'], '')),
+            h('div', { className: 'testi' }, get(['testimonials', 'testi_2'], '')),
+            h('div', { className: 'testi' }, get(['testimonials', 'testi_3'], ''))
+          )
+        );
+      }
+    });
+
+    if (window.CMS) {
+      window.CMS.registerPreviewTemplate('content', PreviewComponent);
+    }
+  </script>
 </body>
 </html>
